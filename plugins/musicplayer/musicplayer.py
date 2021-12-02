@@ -77,6 +77,25 @@ class MusicPlayerPlugin(commands.Cog):
         player.volume = int(volume)
         await ctx.send("Updated guild's volume to " + str(player.volume) + "%")
 
+    @commands.command(name='clear', aliases=['c'])
+    async def clear_playlist(self, ctx):
+        "Clears the playlist"
+        try:
+            logging.info("Clearing playlist")
+
+            player = self.player_for(ctx.guild)
+            logging.info("Playlist has {} songs".format(len(player)))
+
+            player.clear()
+        except Exception as ex:
+            logging.error('Error while trying to connect or play audio')
+            logging.exception(ex)
+
+            await ctx.send("Error while trying to connect or play audio")
+        
+        await ctx.send("Playlist cleared")
+
+
     @commands.command(name='play', aliases=['p'])
     @voice_only
     async def play_cmd(self, ctx, url : str=None, *args):
@@ -95,7 +114,6 @@ class MusicPlayerPlugin(commands.Cog):
         loop = 'loop' in args
 
         try:
-            
             player = self.player_for(ctx.guild)
 
             if url:

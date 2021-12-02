@@ -12,7 +12,8 @@ It supports the following commands:
 - !tag \<name> - Displays the value of the tag for the user.
 - !taglist - Displays your tags
 - !play \<link or tag> [loop?] - Plays audio in a voice call. This wipes the playlist. If a tag name is given, the value will be used as the link. Use loop as an optional argument to make it replay the same song.
-- !playlist \<link> [loop?] [shuffle?]- Adds a youtube playlist to be played as a queue. Loop and shuffle are optional arguments
+- !playlist \<link> [loop?] [shuffle?] - Adds a youtube playlist to be played as a queue. Loop and shuffle are optional arguments
+- !clear - Clears the playlist
 - !skip - skips to the next song if there is a queue
 - !stop - Stops all songs and flushes any existing queues.
 
