@@ -5,6 +5,8 @@ import asyncio
 import youtube_dl
 from discord.ext import commands
 
+from spotify.music_name import get_music_name
+
 from .guildplayer import GuildPlayer, GuildPlayerMode
 from .loader import Loader
 from .song import Song
@@ -77,6 +79,28 @@ class MusicPlayerPlugin(commands.Cog):
         player.volume = int(volume)
         await ctx.send("Updated guild's volume to " + str(player.volume) + "%")
 
+    @commands.command(name='spotify', aliases=['s'])
+    async def song_name(self, ctx):
+        "Get spotify url"
+        spotify_url = None
+
+        try:
+            logging.info("Calling method to get url")
+
+            player = self.player_for(ctx.guild)
+            spotify_url = get_music_name(player.song_name)
+            
+        except Exception as ex:
+            logging.error('Error while trying to get song name')
+            logging.exception(ex)
+
+            await ctx.send('Error while trying to get song name')
+        
+        if spotify_url is not None:
+            await ctx.send(spotify_url)
+        else:
+            await ctx.send("Unable to locate spotify url. Check the logs to improve my search")
+
     @commands.command(name='clear', aliases=['c'])
     async def clear_playlist(self, ctx):
         "Clears the playlist"
@@ -87,14 +111,13 @@ class MusicPlayerPlugin(commands.Cog):
             logging.info("Playlist has {} songs".format(len(player)))
 
             player.clear()
+            await ctx.send("Playlist cleared")
         except Exception as ex:
             logging.error('Error while trying to connect or play audio')
             logging.exception(ex)
 
             await ctx.send("Error while trying to connect or play audio")
         
-        await ctx.send("Playlist cleared")
-
 
     @commands.command(name='play', aliases=['p'])
     @voice_only

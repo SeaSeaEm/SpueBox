@@ -67,6 +67,9 @@ class GuildPlayer:
         self._mode = None
         self.mode = GuildPlayerMode.SINGLE
 
+        self.song_name = None
+        self.author = None
+
     @property
     def volume(self):
         '''Returns the guild's set volume level'''
@@ -197,6 +200,7 @@ class GuildPlayer:
                 # notify the request channel that the song is playing
                 extra = " | Loop" if song.loop else ""
                 playing = discord.Embed()
+                self.song_name = song.title
                 playing.title = f'Now playing {song.title}'
                 playing.description = f"Requested by {song.request_user.name}"
                 playing.url = song.url

@@ -14,6 +14,9 @@ class SongRequestList:
         self.songs = []
         self.song_queue = collections.deque()
 
+    def get_songs(self):
+        return self.songs
+
     def add(self, song):
         "Adds a single song request to the queue"
         self.songs.append(song)

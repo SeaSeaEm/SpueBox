@@ -2,6 +2,9 @@
 client_id = 'client id goes here'
 credentials = ('token_goes_here')
 
+client_id_spotify = 'client id goes here'
+client_secret_spotify = 'client secret goes here'
+
 default_volume = 30
 connection_timeout = 7200 # 2 hours
 
